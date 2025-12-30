@@ -9,6 +9,8 @@ A collection of source code and scripts from my college game development coursew
 **Context:** First Year Final Major Project.
 A procedural platformer where the player navigates through randomly selected rooms, collecting power-ups and fighting enemies.
 
+**[📺 Watch the Gameplay Video](https://youtu.be/zTf339UAQoc?si=0aO2_AyvhpGWCZah)** **[🔗 View the Project Breakdown on my Portfolio](https://sites.google.com/view/myles-coleman/projects/my-first-game)**
+
 **Key Systems Implemented:**
 * **Procedural Flow:** Implemented a system (`Door.cs`) to randomly load different room scenes to create a unique run every time.
 * **Power-Up System:** Created a modular upgrade system (`StatUp.cs`) handling stats like Speed, Double Jump, Health, and "Bat Repellent".
@@ -22,7 +24,9 @@ A procedural platformer where the player navigates through randomly selected roo
 **Context:** First Year Game Jam Entry.
 A prototype featuring a snake-like following mechanic.
 
-* **Snake AI:** A bespoke script (`Follow Player`) using `Vector3.Lerp` and Rigidbody constraints to create a smooth chase movement behavior for AI enemies.
+**[🔗 View the Game Jam Entry on my Portfolio](https://sites.google.com/view/myles-coleman/projects/global-game-jam-2023-roots-to-humanity)**
+
+* **Snake AI:** A bespoke script (`Follow Player`) using `Vector3.Lerp` and Rigidbody constraints to create a smooth chase movement behaviour for AI enemies.
 
 ---
 
