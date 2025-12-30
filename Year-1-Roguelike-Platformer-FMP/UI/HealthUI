@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class HealthUI : MonoBehaviour
+{
+    private Stats statsScript;
+    public Text healthValue;
+    private void Start()
+    {
+        GameObject playerObject = GameObject.Find("Player");
+        statsScript = playerObject.GetComponent<Stats>();
+    }
+
+    private void Update()
+    {
+        healthValue.text = statsScript.health.ToString();
+    }
+}

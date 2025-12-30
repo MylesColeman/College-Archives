@@ -1,0 +1,67 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.UI;
+
+public class StatUp : MonoBehaviour
+{
+    private Stats statsScript;
+    private string objectName;
+    public string lastPickup;
+    public bool pickedUp = false;
+    public Text itemPickup;
+    public itemTimer itemTimerScript;
+    // Start is called before the first frame update
+    private void Start()
+    {
+        GameObject playerObject = GameObject.Find("Player");
+        statsScript = playerObject.GetComponent<Stats>();
+        //Debug.Log(statsScript.health);
+        objectName = gameObject.name;
+        //Debug.Log(gameObject.name);
+        itemPickup = GameObject.Find("Item Pickup").GetComponent<Text>();
+
+        GameObject managerObject = GameObject.Find("Game Manager");
+        itemTimerScript = managerObject.GetComponent<itemTimer>();
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (objectName == "Health Up!")
+            {
+                statsScript.health++;
+                lastPickup = objectName;
+                Debug.Log(lastPickup);
+            }
+            else if (objectName == "Speed Up!")
+            {
+                statsScript.speed++;
+                lastPickup = objectName;
+                Debug.Log(lastPickup);
+            }
+            else if (objectName == "Double Jump!")
+            {
+                statsScript.jumpCounter++;
+                lastPickup = objectName;
+                Debug.Log(lastPickup);
+            }
+            else if (objectName == "Ammo +10")
+            {
+                statsScript.ammo = statsScript.ammo + 10;
+                lastPickup = objectName;
+                Debug.Log(lastPickup);
+            }
+            else if (objectName == "Bat Repellent!")
+            {
+                statsScript.batDetectionRadius = 0.25f;
+                Debug.Log(statsScript.batDetectionRadius);
+                lastPickup = objectName;
+                Debug.Log(lastPickup);
+            }
+            pickedUp = true;
+            gameObject.SetActive(false);
+        }       
+    }
+}

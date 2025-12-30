@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class RoomCounterUI : MonoBehaviour
+{
+    public Text roomCounterText;
+    public int roomCounter = 0;
+    public int highscore = 0;
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += IncrementRoomCounter;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= IncrementRoomCounter;
+    }
+
+    private void IncrementRoomCounter(Scene scene, LoadSceneMode mode)
+    {
+        roomCounter++;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+
+        roomCounterText.text = "Room's Visited: " + roomCounter.ToString();
+    }
+
+    private void Start()
+    {
+        highscore = PlayerPrefs.GetInt("Highscore", 0);
+    }
+}

@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Spikes : MonoBehaviour
+{
+    private Stats statsScript;
+
+    private void Start()
+    {
+        // Find the object with the Health script and get a reference to it
+        GameObject playerObject = GameObject.Find("Player");
+        statsScript = playerObject.GetComponent<Stats>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            statsScript.health = 0;
+            SceneManager.LoadScene("Death Screen");
+        }
+    }
+}

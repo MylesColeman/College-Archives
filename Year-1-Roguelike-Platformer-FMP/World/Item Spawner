@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ItemSpawner : MonoBehaviour
+{
+    public GameObject[] itemList;
+    public float xCoord;
+    public float yCoord;
+    // Start is called before the first frame update
+    void Start()
+    {
+        xCoord = transform.position.x;
+        yCoord = transform.position.y;
+        itemList = Resources.LoadAll<GameObject>("Room Assets/Items");
+        foreach (var x in itemList)
+        {
+            //Debug.Log(x.ToString());
+        }
+        int itemSpawned = Random.Range(0, itemList.Length);
+        GameObject newObject = Instantiate(itemList[itemSpawned], new Vector2(xCoord, yCoord), Quaternion.identity);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Collections.Generic;
+
+public class DartTrapLeft : MonoBehaviour
+{
+    private bool shot = false;
+    private bool playerCollided = false;
+    public LayerMask layerMaskWalls;
+    public LayerMask layerMaskPlayer;
+    private float detectionLength;
+    private float xCoord;
+    private float yCoord;
+    // Start is called before the first frame update
+    void Start()
+    {
+        xCoord = transform.position.x;
+        yCoord = transform.position.y;
+        RaycastHit2D wallHit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), 300f, layerMaskWalls);
+
+        if (wallHit)
+        {
+            //Debug.Log("Dart Trap Collision" + wallHit.point.x);
+            //Debug.Log(xCoord);
+            detectionLength = transform.position.x - wallHit.point.x;
+            //Debug.Log(detectionLength);
+        }
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        RaycastHit2D playerHit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), detectionLength, layerMaskPlayer);
+        if (playerHit)
+        {
+            if (shot == false)
+            {
+                GameObject prefab = Resources.Load("Room Assets/Hazards/DartLeft") as GameObject;
+                GameObject newObject = Instantiate(prefab, new Vector2(xCoord, yCoord), Quaternion.identity);
+                shot = true;
+            }
+            //Debug.Log("Player Hit");
+        }
+    }
+}

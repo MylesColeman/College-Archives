@@ -1,0 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class itemTimer : MonoBehaviour
+{
+    public StatUp statsUpScript;
+    public float timer;
+    public Text itemPickup;
+    private int objectFound;
+    // Start is called before the first frame update
+    void Start()
+    {
+        GameObject itemObject = GameObject.FindGameObjectWithTag("Item");
+        statsUpScript = itemObject.GetComponent<StatUp>();
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        //Debug.Log(timer);
+        //Debug.Log(statsUpScript.lastPickup);
+        if (objectFound < 1)
+        {
+            //Debug.Log("Object Found");
+            GameObject itemObject = GameObject.FindGameObjectWithTag("Item");
+            statsUpScript = itemObject.GetComponent<StatUp>();
+            objectFound++;
+        }
+        if (statsUpScript.pickedUp)
+        {
+            timer += Time.deltaTime;
+        }
+
+        if (timer >= 1.5)
+        {
+            itemPickup.text = "";
+            statsUpScript.lastPickup = "";
+            statsUpScript.pickedUp = false;
+            timer = 0;
+            objectFound = 0;
+        }
+        if (timer < 1.5)
+        {
+            itemPickup.text = statsUpScript.lastPickup;
+        }
+    }
+}

@@ -1,0 +1,29 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
+
+public class dartMovementLeft : MonoBehaviour
+{
+    public float moveSpeed;
+    // Start is called before the first frame update
+    void Start()
+    {
+        moveSpeed *= -1;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+        transform.Translate(new Vector2(1f, 0f) * moveSpeed * Time.deltaTime);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            Debug.Log("Wall Hit");
+            Destroy(gameObject);
+        }
+    }
+}

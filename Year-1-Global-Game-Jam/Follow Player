@@ -1,0 +1,32 @@
+using UnityEngine;
+
+public class SnakeAi : MonoBehaviour
+{
+    public Transform player;
+    public float detectionRadius = 10.0f;
+    public float followSpeed = 2.0f;
+    private Vector3 startPosition;
+    private Rigidbody rigidbody;
+    private void Start()
+    {
+        startPosition = transform.position;
+        rigidbody = GetComponent<Rigidbody>();
+        rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+    }
+
+    private void Update()
+    {
+        float distance = Vector3.Distance(player.position, transform.position);
+        if (distance <= detectionRadius)
+        {
+            transform.LookAt(player);
+            rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+            transform.position = Vector3.Lerp(transform.position, player.position, followSpeed * Time.deltaTime);
+            transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
+        }
+        else
+        {
+            rigidbody.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        }
+    }
+}

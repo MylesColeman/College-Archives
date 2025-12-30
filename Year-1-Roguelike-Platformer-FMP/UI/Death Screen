@@ -1,0 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class DeathScreen : MonoBehaviour
+{
+    public Text scoreText;
+    public Text highscoreText;
+    private RoomCounterUI roomCounterUI;
+    public void Retry()
+    {
+        roomCounterUI.roomCounter = 0;
+        SceneManager.LoadScene("Start Room");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    private void Start()
+    {
+        GameObject Player = GameObject.Find("Player");
+        GameObject UI = GameObject.Find("UI");
+
+        Destroy(Player);
+        Destroy(UI);
+
+        GameObject scoreUI = GameObject.Find("Game Manager");
+        roomCounterUI = scoreUI.GetComponent<RoomCounterUI>();
+
+        roomCounterUI.roomCounter--;
+    }
+
+    public void Update()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName == "Death Screen")
+        {
+            if (roomCounterUI.roomCounter > roomCounterUI.highscore)
+            {
+                roomCounterUI.highscore = roomCounterUI.roomCounter;
+                Debug.Log("Score: " + roomCounterUI.roomCounter);
+                Debug.Log("Highscore: " + roomCounterUI.highscore);
+                PlayerPrefs.SetInt("Highscore", roomCounterUI.highscore);
+                PlayerPrefs.Save();
+            }
+        }
+        //Debug.Log("The score is: " + roomCounterUI.roomCounter);
+
+        scoreText.text = "Room's Visited: " + roomCounterUI.roomCounter.ToString();
+
+        //Debug.Log("Your highscore is: " + roomCounterUI.highscore);
+
+        highscoreText.text = "Highscore: " + roomCounterUI.highscore.ToString();
+    }
+}

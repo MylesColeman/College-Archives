@@ -1,0 +1,22 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class ammoUI : MonoBehaviour
+{
+    public Stats statsScript;
+    public Text ammoValue;
+    // Start is called before the first frame update
+    void Start()
+    {
+        GameObject playerObject = GameObject.Find("Player");
+        statsScript = playerObject.GetComponent<Stats>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        ammoValue.text = statsScript.ammo.ToString();
+    }
+}

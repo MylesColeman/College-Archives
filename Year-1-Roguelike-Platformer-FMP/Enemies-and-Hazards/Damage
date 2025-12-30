@@ -1,0 +1,53 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Damage : MonoBehaviour
+{
+    public int health = 1;
+    public int damage = 1;
+    private Health healthScript; // Reference to the Health script
+    private Movement Movement;
+
+    private void Start()
+    {
+        // Find the player object using the tag "Player"
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        // Get a reference to the Movement component attached to the player object
+        Movement = playerObject.GetComponent<Movement>();
+
+        // Get a reference to the Health script attached to the player object
+        healthScript = playerObject.GetComponent<Health>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Movement.knockbackCounter = Movement.knockbackTime;
+            if (collision.transform.position.x <= transform.position.x)
+            {
+                Movement.knockbackRight = true;
+            }
+            if (collision.transform.position.x > transform.position.x)
+            {
+                Movement.knockbackRight = false;
+            }
+            // Call the DecrementHealth() method in the Health script to decrease the health by the damage amount
+            healthScript.DecrementHealth(damage);
+        }
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            health--;
+        }
+    }
+
+    private void Update()
+    {
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+}

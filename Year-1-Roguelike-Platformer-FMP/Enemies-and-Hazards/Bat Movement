@@ -1,0 +1,38 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BatMovement : MonoBehaviour
+{
+    private bool detected = false;
+    public float speed;
+    private Vector2 playerPosition;
+    public CircleCollider2D circleCollider;
+    public float detectionRadius;
+    public Stats statsScript;
+
+    private void Start()
+    {
+        GameObject playerObject = GameObject.Find("Player");
+        statsScript = playerObject.GetComponent<Stats>();
+        circleCollider = GetComponent<CircleCollider2D>();
+    }
+    void Update()
+    {
+        circleCollider.radius = statsScript.batDetectionRadius;
+        playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+        if (detected == true)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, playerPosition, speed * Time.deltaTime);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Bat Trigger");
+            detected = true;
+        }
+    }
+}

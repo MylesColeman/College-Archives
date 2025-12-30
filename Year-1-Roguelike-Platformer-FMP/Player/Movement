@@ -1,0 +1,78 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Movement : MonoBehaviour
+{
+    private int dJumpCount;
+    private Stats statsScript;
+    private Rigidbody2D RB2D;
+    private BoxCollider2D BC2D;
+
+    public float knockbackForce;
+    public float knockbackTime;
+    public float knockbackCounter;
+    public bool knockbackRight;
+
+    [SerializeField] private LayerMask jumpableGround;
+    // Start is called before the first frame update
+    private void Start()
+    {
+        GameObject playerObject = GameObject.Find("Player");
+        statsScript = playerObject.GetComponent<Stats>();
+        //Debug.Log(statsScript.speed);
+        //Debug.Log(statsScript.jumpForce);
+        RB2D = GetComponent<Rigidbody2D>();
+        BC2D = GetComponent<BoxCollider2D>();
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
+            RB2D.velocity = new Vector2(RB2D.velocity.x, statsScript.jumpForce);
+        }
+        if (Input.GetButtonDown("Jump") && !IsGrounded())
+        {
+            if (statsScript.jumpCounter > 0)
+            {
+                RB2D.velocity = new Vector2(RB2D.velocity.x, statsScript.jumpForce);
+                //Debug.Log("double jump");
+                statsScript.jumpCounter--;
+                dJumpCount++;
+            }
+        }
+        if (IsGrounded())
+        {
+            statsScript.jumpCounter = statsScript.jumpCounter + dJumpCount;
+            dJumpCount = 0;
+        }
+        float walking = Input.GetAxisRaw("Horizontal");
+        
+        if (knockbackCounter <= 0)
+        {
+            RB2D.velocity = new Vector2(walking * statsScript.speed, RB2D.velocity.y);
+        }
+        else
+        {
+            if (knockbackRight == true)
+            {
+                RB2D.velocity = new Vector2(-knockbackForce, knockbackForce);
+            }
+            if (knockbackRight == false)
+            {
+                RB2D.velocity = new Vector2(knockbackForce, knockbackForce);
+            }
+            knockbackCounter -= Time.deltaTime;
+        }
+    }
+    private bool IsGrounded()
+    {
+        Vector2 boxSize = new Vector2(1f, 0.1f);
+        Vector2 boxCenter = new Vector2(transform.position.x, transform.position.y - 1f);
+
+        return Physics2D.BoxCast(boxCenter, boxSize, 0f, Vector2.down, 0.1f, jumpableGround);
+    }
+
+}

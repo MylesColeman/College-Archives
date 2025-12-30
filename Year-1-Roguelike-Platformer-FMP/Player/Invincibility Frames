@@ -1,0 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InvincibilityFrames : MonoBehaviour
+{
+    public Stats statsScript;
+    private bool invincibilityFramesCheck = false;
+    public float activeInvincibilityFrames;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        GameObject playerObject = GameObject.Find("Player");
+        statsScript = playerObject.GetComponent<Stats>();
+
+        activeInvincibilityFrames = statsScript.invincibilityFrames;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (invincibilityFramesCheck)
+        {
+            activeInvincibilityFrames -= Time.deltaTime;
+
+        }
+        if (activeInvincibilityFrames <= 0)
+        {
+            invincibilityFramesCheck = false;
+            activeInvincibilityFrames = statsScript.invincibilityFrames;
+        }
+        Debug.Log(invincibilityFramesCheck);
+        Debug.Log(activeInvincibilityFrames);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Snake"))
+        {
+            invincibilityFramesCheck = true;
+        }
+
+        if (collision.gameObject.CompareTag("Hazard"))
+        {
+            invincibilityFramesCheck = true;
+        }
+    }
+}

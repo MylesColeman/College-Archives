@@ -1,0 +1,26 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Stats : MonoBehaviour
+{
+    public float speed = 7f;
+    public float jumpForce = 14f;
+    public int health = 3;
+    public int jumpCounter;
+    public int ammo = 6;
+    public float batDetectionRadius = 0.5f;
+    public float bulletSpeed = 25;
+    public float invincibilityFrames = 1;
+    // Start is called before the first frame update
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

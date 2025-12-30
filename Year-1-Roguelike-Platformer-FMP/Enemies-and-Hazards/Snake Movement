@@ -1,0 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SnakeMovement : MonoBehaviour
+{
+    public float moveSpeed = 5.5f;
+
+    private void FixedUpdate()
+    {
+        transform.Translate(new Vector2(1f, 0f) * moveSpeed * Time.deltaTime);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Snake Detection"))
+        {
+            moveSpeed *= -1;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Snake"))
+        {
+            moveSpeed *= -1;
+        }
+    }
+}
